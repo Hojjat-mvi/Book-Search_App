@@ -1,6 +1,6 @@
 import React from "react";
 
-import noimage from "../asset/noimage.png";
+import noImage from "../asset/noimage.png";
 
 const Book = ({ book, onBookClick }) => {
   const clickHandler = () => {
@@ -16,7 +16,7 @@ const Book = ({ book, onBookClick }) => {
       <div className="row g-0">
         <div className="col-md-4">
           <img
-            src={book.imageLinks ? book.imageLinks.smallThumbnail : noimage}
+            src={book.imageLinks ? book.imageLinks.smallThumbnail : noImage}
             className="img-fluid rounded-start"
             alt="cover"
           />

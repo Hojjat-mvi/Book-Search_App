@@ -1,58 +1,25 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 import { useState, useEffect } from "react";
 
 import SearchBar from "./Search‌Bar";
 import BooksDetails from "./BooksDetails";
 import BooksList from "./BooksList";
 import { Loading } from "./Loading/Loading";
+import UseBooks from "../hooks/UseBooks";
 
 const App = () => {
-  const [bookResponse, setbookResponse] = useState({
-    books: [],
-    loading: false,
-    error: null,
-  });
-  const [selectedBooks, setselectedBooks] = useState(null);
-  const firstvalue = "javascript";
-
-  const search = async (title) => {
-    setbookResponse({ ...bookResponse, loading: true });
-    try {
-      var request = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${title}`
-      );
-      setbookResponse({
-        ...bookResponse,
-        books: request.data.items,
-        loading: false,
-        error: null,
-      });
-
-      setselectedBooks(request.data.items[0].volumeInfo);
-    } catch (e) {
-      setbookResponse({
-        ...bookResponse,
-        books: [],
-        loading: false,
-        error: "error",
-      });
-
-      setselectedBooks(null);
-    }
-  };
+  const [loading, error, books, search] = UseBooks("javascript");
+  const [selectedBooks, setSelectedBooks] = useState(null);
 
   const onBookClick = (book) => {
-    setselectedBooks(book);
+    setSelectedBooks(book);
   };
 
   useEffect(() => {
-    search(firstvalue);
-  }, []);
+    if (books.length) setSelectedBooks(books[0].volumeInfo);
+  }, [books]);
 
-
-  const contentshow = () => {
-    const { books, error, loading } = bookResponse;
+  const contentShow = () => {
     if (loading) {
       return <Loading />;
     }
@@ -74,8 +41,8 @@ const App = () => {
 
   return (
     <div className="container">
-      <SearchBar onSubmit={search} firstvalue={"javascript"} />
-      {contentshow()}
+      <SearchBar onSubmit={search} firstValue={"javascript"} />
+      {contentShow()}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const SearchBar = ({ firstvalue, onSubmit }) => {
-  const [title, settitle] = useState(firstvalue);
+const SearchBar = ({ firstValue, onSubmit }) => {
+  const [title, setTitle] = useState(firstValue);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -17,7 +17,7 @@ const SearchBar = ({ firstvalue, onSubmit }) => {
           placeholder="Search your book name"
           value={title}
           onChange={(event) => {
-            settitle(event.target.value);
+            setTitle(event.target.value);
           }}
         />
 
